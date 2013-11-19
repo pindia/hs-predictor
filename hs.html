@@ -17,7 +17,7 @@
         <div class="unit" ng-repeat="result in results">
             <table>
                 <tr ng-repeat="(dmg, prob) in result">
-                    <td>{{dmg}}</td><td>{{prob}}</td>
+                    <td>{{dmg}}</td><td>{{prob*100|number:0}}%</td>
                 </tr>
             </table>
         </div>
