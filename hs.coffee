@@ -23,17 +23,22 @@ class GameState
     [i, val] = this.log.pop()
     this.units[i] = val
 
-search = (myUnits, enemyUnits, enemyDamage) ->
+search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
   state = new GameState(myUnits, enemyUnits)
-  explore = (state, enemyDamageLeft) ->
-    if enemyDamageLeft == 0
+  explore = (state, enemyDamageLeft, allDamageLeft) ->
+    if allDamageLeft > 0
+      state.each (i) ->
+        state.damage(i, 1)
+        explore(state, enemyDamageLeft, allDamageLeft - 1)
+        state.undo()
+    else if enemyDamageLeft > 0
+      state.eachEnemy (i) ->
+        state.damage(i, 1)
+        explore(state, enemyDamageLeft - 1, allDamageLeft)
+        state.undo()
+    else
       console.log state.units
-      return
-    state.eachEnemy (i) ->
-      state.damage(i, 1)
-      explore(state, enemyDamageLeft - 1)
-      state.undo()
-  explore(state, enemyDamage)
+  explore(state, enemyDamage, allDamage)
 
 
 #gs = new GameState([30], [30, 2])
@@ -44,4 +49,4 @@ search = (myUnits, enemyUnits, enemyDamage) ->
 #
 #console.log gs.getAllLength()
 
-search([30], [30, 2], 3)
+search([30], [30, 2], 3, 1)
