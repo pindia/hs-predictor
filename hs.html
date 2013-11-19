@@ -1,30 +1,17 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="hs" ng-controller="MainController">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="core.js"></script>
     <script src="ui.js"></script>
     <link rel="stylesheet" href="hs.css" />
 </head>
 <body>
-    <div class="unit" ng-controller="Unit" ng-class="{disabled: hp==0}">
-        <input type="text" ng-model="hp">
-        <div ng-click="modHp(1)">+</div>
-        <div ng-click="modHp(-1)">-</div>
+    <div class="side" ng-controller="Side" ng-init="init('my')">
+        <unit ng-repeat="unit in units" unit="unit"></unit>
     </div>
-    <div class="unit" ng-controller="Unit" ng-class="{disabled: hp==0}">
-        <input type="text" ng-model="hp">
-        <div ng-click="modHp(1)">+</div>
-        <div ng-click="modHp(-1)">-</div>
-    </div>
-    <div class="unit" ng-controller="Unit" ng-class="{disabled: hp==0}">
-        <input type="text" ng-model="hp">
-        <div ng-click="modHp(1)">+</div>
-        <div ng-click="modHp(-1)">-</div>
-    </div>
-    <div class="unit" ng-controller="Unit" ng-class="{disabled: hp==0}">
-        <input type="text" ng-model="hp">
-        <div ng-click="modHp(1)">+</div>
-        <div ng-click="modHp(-1)">-</div>
+    <div class="side" ng-controller="Side" ng-init="init('enemy')">
+        <unit ng-repeat="unit in units" unit="unit"></unit>
     </div>
 </body>
 </html>

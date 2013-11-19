@@ -42,7 +42,7 @@ class ProbabilityAggregator
       this.addResult(i, this.units[i] - results[i])
 
 
-search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
+window.search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
   state = new GameState(myUnits, enemyUnits)
   agg = new ProbabilityAggregator(state.units)
   explore = (state, enemyDamageLeft, allDamageLeft) ->
@@ -60,5 +60,3 @@ search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
       agg.addResults(state.units)
   explore(state, enemyDamage, allDamage)
   return agg
-
-console.log search([30], [30, 2], 3, 1).data

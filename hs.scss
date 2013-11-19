@@ -3,6 +3,10 @@
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
 
+.side {
+  overflow: auto;
+}
+
 .unit {
   width: 100px; height: 100px;
   position: relative;
