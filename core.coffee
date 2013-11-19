@@ -23,8 +23,28 @@ class GameState
     [i, val] = this.log.pop()
     this.units[i] = val
 
+class ProbabilityAggregator
+  constructor: (units) ->
+    this.units = []
+    this.data = []
+    for i in [0...units.length]
+      this.units.push units[i] # Copy list
+      this.data.push {}
+
+  addResult: (i, damage) ->
+    d = this.data[i]
+    if damage not of d
+      d[damage] = 0
+    d[damage] += 1
+
+  addResults: (results) ->
+    for i in [0...results.length]
+      this.addResult(i, this.units[i] - results[i])
+
+
 search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
   state = new GameState(myUnits, enemyUnits)
+  agg = new ProbabilityAggregator(state.units)
   explore = (state, enemyDamageLeft, allDamageLeft) ->
     if allDamageLeft > 0
       state.each (i) ->
@@ -37,16 +57,8 @@ search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
         explore(state, enemyDamageLeft - 1, allDamageLeft)
         state.undo()
     else
-      console.log state.units
+      agg.addResults(state.units)
   explore(state, enemyDamage, allDamage)
+  return agg
 
-
-#gs = new GameState([30], [30, 2])
-#gs.damage(0, 30)
-#gs.undo()
-#gs.damage(1, 2)
-#gs.undo()
-#
-#console.log gs.getAllLength()
-
-search([30], [30, 2], 3, 1)
+console.log search([30], [30, 2], 3, 1).data
