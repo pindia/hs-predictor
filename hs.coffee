@@ -1,6 +1,3 @@
-LOG_SET = 1
-LOG_INSERT = 2
-
 class GameState
   constructor: (myUnits, enemyUnits) ->
     this.units = enemyUnits
@@ -9,31 +6,22 @@ class GameState
       this.units.push u
     this.log = []
 
+  _each: (includeFriendly, callback) ->
+    for i in [0...(if includeFriendly then this.units.length else this.myIndex)]
+      if this.units[i] > 0
+        callback(i)
+
+  each: (callback) -> this._each(true, callback)
+  eachEnemy: (callback) -> this._each(false, callback)
+
   damage: (i, amt) ->
     prev = this.units[i]
     this.units[i] -= amt
-    if this.units[i] <= 0
-      this.log.push([LOG_INSERT, i, prev])
-      this.units.splice(i, 1)
-      if i < this.myIndex
-        this.myIndex -= 1
-    else
-      this.log.push([LOG_SET, i, prev ])
-
-  getEnemyLength: ->
-    return this.myIndex
-
-  getAllLength: ->
-    return this.units.length
+    this.log.push([i, prev ])
 
   undo: ->
-    [op, i, val] = this.log.pop()
-    if op == LOG_SET
-      this.units[i] = val
-    else
-      this.units.splice(i, 0, val)
-      if i <= this.myIndex
-        this.myIndex += 1
+    [i, val] = this.log.pop()
+    this.units[i] = val
 
 search = (myUnits, enemyUnits, enemyDamage) ->
   state = new GameState(myUnits, enemyUnits)
@@ -41,7 +29,7 @@ search = (myUnits, enemyUnits, enemyDamage) ->
     if enemyDamageLeft == 0
       console.log state.units
       return
-    for i in [0...state.getEnemyLength()]
+    state.eachEnemy (i) ->
       state.damage(i, 1)
       explore(state, enemyDamageLeft - 1)
       state.undo()
