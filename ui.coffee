@@ -20,16 +20,22 @@ module.directive 'unit', ->
   '''
 
 module.factory 'unitsService', ->
-  units = {my: [new Unit(30), new Unit(0), new Unit(0)], enemy: [new Unit(30), new Unit(2), new Unit(0)]}
+  units = {my: [new Unit(30), new Unit(0), new Unit(0)], enemy: [new Unit(30), new Unit(2), new Unit(0), new Unit(0), new Unit(0)]}
   return units
 
-window.MainController = ($scope, unitsService) ->
+module.factory 'resultsService', ->
+  results = {my: [], enemy: []}
+  return results
+
+window.MainController = ($scope, unitsService, resultsService) ->
   $scope.$on 'unitsChanged', ->
     console.log 'change'
     myUnits = (unit.hp for unit in unitsService.my when unit.hp > 0)
     enemyUnits = (unit.hp for unit in unitsService.enemy when unit.hp > 0)
-    console.log myUnits
-    console.log search(myUnits, enemyUnits, 3, 0)
+    results = search(myUnits, enemyUnits, 3, 0)
+    console.log results
+    resultsService.enemy = results.data
+    $scope.$broadcast('newResults')
 
 window.Side = ($scope, unitsService) ->
   $scope.init = (which) ->
@@ -37,6 +43,13 @@ window.Side = ($scope, unitsService) ->
   $scope.$watch('units', ->
     $scope.$emit('unitsChanged')
   , true)
+
+window.Results = ($scope, resultsService) ->
+  $scope.init = (which) ->
+    $scope.results = resultsService[which]
+    $scope.$on 'newResults', ->
+      $scope.results = resultsService[which]
+
 
 #
 #
