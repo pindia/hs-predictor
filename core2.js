@@ -99,7 +99,7 @@
 
   d = new Date();
 
-  for (i = 1; i <= 500; i++) {
+  for (i = 1; i <= 100; i++) {
     search([30, 2], [30, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1, 1], [false, false, false, false, false, false, false, false]);
   }
 

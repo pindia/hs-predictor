@@ -17,6 +17,7 @@ class GameState
     for i in [0...len] # Call callback for each eligible unit
       if this.units[i] > 0
         callback(i, n)
+    return undefined # Stop CoffeeScript from being dumb and building a results array
 
   damage: (i, amt) ->
     prev = this.units[i]
@@ -44,6 +45,7 @@ class ProbabilityAggregator
   addResults: (results, prob) ->
     for i in [0...results.length]
       this.addResult(i, this.units[i] - results[i], prob)
+    return undefined # Stop CoffeeScript from being dumb and building a results array
 
 window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
   state = new GameState(myUnits, enemyUnits)
@@ -59,8 +61,3 @@ window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
       agg.addResults(state.units, probability)
   explore(0, 1)
   return agg
-
-d = new Date()
-for i in [1..500]
-  search([30, 2], [30, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1, 1], [false, false, false, false, false, false, false, false])
-console.log new Date() - d
