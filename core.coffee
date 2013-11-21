@@ -4,7 +4,8 @@ class GameState
     this.myIndex = enemyUnits.length # Index of first player unit
     for u in myUnits
       this.units.push u
-    this.log = []
+    this.logIndex = []
+    this.logValues = []
 
   each: (includeFriendly, callback) ->
     len = (if includeFriendly then this.units.length else this.myIndex)
@@ -19,11 +20,11 @@ class GameState
   damage: (i, amt) ->
     prev = this.units[i]
     this.units[i] -= amt
-    this.log.push([i, prev ])
+    this.logIndex.push(i)
+    this.logValues.push(prev)
 
   undo: ->
-    [i, val] = this.log.pop()
-    this.units[i] = val
+    this.units[this.logIndex.pop()] = this.logValues.pop()
 
 class ProbabilityAggregator
   constructor: (units) ->
@@ -57,3 +58,8 @@ window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
       agg.addResults(state.units, probability)
   explore(0, 1)
   return agg
+
+d = new Date()
+for i in [1..100]
+  search([30, 2], [30, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1, 1], [false, false, false, false, false, false, false, false])
+console.log new Date() - d
