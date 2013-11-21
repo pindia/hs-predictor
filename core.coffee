@@ -6,18 +6,15 @@ class GameState
       this.units.push u
     this.log = []
 
-  _each: (includeFriendly, callback) ->
-    n = (if includeFriendly then this.units.length else this.myIndex)
-    e = 0
-    for i in [0...n]
+  each: (includeFriendly, callback) ->
+    len = (if includeFriendly then this.units.length else this.myIndex)
+    n = 0
+    for i in [0...len] # Calculate number of eligible units
       if this.units[i] > 0
-        e += 1
-    for i in [0...n]
+        n += 1
+    for i in [0...len] # Call callback for each eligible unit
       if this.units[i] > 0
-        callback(i, e)
-
-  each: (callback) -> this._each(true, callback)
-  eachEnemy: (callback) -> this._each(false, callback)
+        callback(i, n)
 
   damage: (i, amt) ->
     prev = this.units[i]
@@ -46,22 +43,17 @@ class ProbabilityAggregator
     for i in [0...results.length]
       this.addResult(i, this.units[i] - results[i], prob)
 
-
-window.search = (myUnits, enemyUnits, enemyDamage, allDamage) ->
+window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
   state = new GameState(myUnits, enemyUnits)
   agg = new ProbabilityAggregator(state.units)
-  explore = (state, enemyDamageLeft, allDamageLeft, probability) ->
-    if allDamageLeft > 0
-      state.each (i, n) ->
-        state.damage(i, 1)
-        explore(state, enemyDamageLeft, allDamageLeft - 1, probability/n)
-        state.undo()
-    else if enemyDamageLeft > 0
-      state.eachEnemy (i, n) ->
-        state.damage(i, 1)
-        explore(state, enemyDamageLeft - 1, allDamageLeft, probability/n)
+  damageLength = damageAmounts.length
+  explore = (damageIndex, probability) ->
+    if damageIndex < damageLength
+      state.each damageTypes[damageIndex], (i, n) ->
+        state.damage(i, damageAmounts[damageIndex])
+        explore(damageIndex + 1, probability/n)
         state.undo()
     else
       agg.addResults(state.units, probability)
-  explore(state, enemyDamage, allDamage, 1)
+  explore(0, 1)
   return agg

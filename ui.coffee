@@ -32,7 +32,7 @@ window.MainController = ($scope, unitsService, resultsService) ->
     console.log 'change'
     myUnits = (unit.hp for unit in unitsService.my when unit.hp > 0)
     enemyUnits = (unit.hp for unit in unitsService.enemy when unit.hp > 0)
-    results = search(myUnits, enemyUnits, 3, 0)
+    results = search(myUnits, enemyUnits, [1, 1, 1], [false, false, false])
     console.log results
     resultsService.enemy = results.data
     $scope.$broadcast('newResults')
