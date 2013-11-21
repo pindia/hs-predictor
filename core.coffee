@@ -6,9 +6,10 @@ class GameState
       this.units.push u
     this.logIndex = []
     this.logValues = []
+    this.numFriendly = 0
 
   each: (includeFriendly, callback) ->
-    len = (if includeFriendly then this.units.length else this.myIndex)
+    len = if includeFriendly then this.units.length else this.myIndex
     n = 0
     for i in [0...len] # Calculate number of eligible units
       if this.units[i] > 0
@@ -60,6 +61,6 @@ window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
   return agg
 
 d = new Date()
-for i in [1..100]
+for i in [1..500]
   search([30, 2], [30, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1, 1], [false, false, false, false, false, false, false, false])
 console.log new Date() - d
