@@ -8,11 +8,16 @@
 }
 
 .unit {
-  width: 100px; height: 100px;
+  width: 100px; height: 200px;
   position: relative;
   float: left;
   margin: 10px;
-  border: 1px solid black;
+
+  .unit-box {
+    border: 1px solid black;
+    width: 100px; height: 100px;
+    position: relative;
+  }
   input {
     position: absolute;
     left: 30px; top: 30px;
@@ -22,5 +27,21 @@
   }
   &.disabled {
     opacity: 0.3;
+  }
+  .up-arrow, .down-arrow {
+    position: absolute;
+    left: 0px; right: 0px;
+    text-align: center;
+    -moz-transform: scaleX(2);
+    -webkit-transform: scaleX(2);
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+  }
+  .up-arrow {
+    top: 8px;
+  }
+  .down-arrow {
+    bottom: 6px;
   }
 }

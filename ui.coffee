@@ -13,9 +13,21 @@ module.directive 'unit', ->
     unit: '=unit'
   template: '''
     <div class="unit" ng-class="{disabled: unit.hp==0}">
-        <input type="text" ng-model="unit.hp">
-        <div ng-click="unit.modHp(1)">+</div>
-        <div ng-click="unit.modHp(-1)">-</div>
+        <div class="unit-box">
+          <input type="text" ng-model="unit.hp">
+          <div ng-click="unit.modHp(1)" class="up-arrow">&#9650;</div>
+          <div ng-click="unit.modHp(-1)" class="down-arrow">&#9660;</div>
+        </div>
+        <div class="results-box">
+          <table ng-show="unit.hp > 0">
+              <tr ng-repeat="(dmg, prob) in unit.results">
+                  <td>
+                    <span ng-show="dmg != unit.hp">{{dmg}}</span>
+                    <span ng-show="dmg == unit.hp">&#9760;</span>
+                  </td><td title="{{prob}}">{{prob*100|number:0}}%</td>
+              </tr>
+          </table>
+        </div>
     </div>
   '''
 
@@ -32,23 +44,28 @@ window.MainController = ($scope, unitsService, resultsService) ->
     console.log 'change'
     myUnits = (unit.hp for unit in unitsService.my when unit.hp > 0)
     enemyUnits = (unit.hp for unit in unitsService.enemy when unit.hp > 0)
+    myIndex = enemyUnits.length
     results = search(myUnits, enemyUnits, [1, 1, 1], [false, false, false])
-    console.log results
-    resultsService.enemy = results.data
+    console.log enemyUnits
+    for res, i in results.data.slice(0, myIndex)
+      unitsService.enemy[i].results = res
+    for res, i in results.data.slice(myIndex)
+      unitsService.my[i].results = res
     $scope.$broadcast('newResults')
 
-window.Side = ($scope, unitsService) ->
+window.Side = ($scope, unitsService, resultsService) ->
   $scope.init = (which) ->
     $scope.units = unitsService[which]
+    $scope.results = resultsService[which]
   $scope.$watch('units', ->
     $scope.$emit('unitsChanged')
   , true)
 
-window.Results = ($scope, resultsService) ->
-  $scope.init = (which) ->
-    $scope.results = resultsService[which]
-    $scope.$on 'newResults', ->
-      $scope.results = resultsService[which]
+#window.Results = ($scope, resultsService) ->
+#  $scope.init = (which) ->
+#    $scope.results = resultsService[which]
+#    $scope.$on 'newResults', ->
+#      $scope.results = resultsService[which]
 
 
 #

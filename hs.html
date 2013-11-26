@@ -7,20 +7,11 @@
     <link rel="stylesheet" href="hs.css" />
 </head>
 <body>
-    <div class="side" ng-controller="Side" ng-init="init('my')">
-        <unit ng-repeat="unit in units" unit="unit"></unit>
-    </div>
     <div class="side" ng-controller="Side" ng-init="init('enemy')">
         <unit ng-repeat="unit in units" unit="unit"></unit>
     </div>
-    <div class="results" ng-controller="Results" ng-init="init('enemy')">
-        <div class="unit" ng-repeat="result in results">
-            <table>
-                <tr ng-repeat="(dmg, prob) in result">
-                    <td>{{dmg}}</td><td title="{{prob}}">{{prob*100|number:0}}%</td>
-                </tr>
-            </table>
-        </div>
+    <div class="side" ng-controller="Side" ng-init="init('my')">
+        <unit ng-repeat="unit in units" unit="unit"></unit>
     </div>
 </body>
 </html>
