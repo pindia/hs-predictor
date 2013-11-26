@@ -4,9 +4,8 @@ class GameState
     this.myIndex = enemyUnits.length # Index of first player unit
     for u in myUnits
       this.units.push u
-    this.logIndex = []
+    this.logIndex = [] # Logs of what damage has done, for fast undo when exploring other possibilities
     this.logValues = []
-    this.numFriendly = 0
 
   each: (includeFriendly, callback) ->
     len = if includeFriendly then this.units.length else this.myIndex

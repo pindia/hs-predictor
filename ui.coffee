@@ -4,7 +4,7 @@ class Unit
   constructor: (hp) ->
     this.hp = hp
   modHp: (amt) ->
-    this.hp = Math.min(99, Math.max(0, this.hp + amt))
+    this.hp = Math.min(99, Math.max(0, parseInt(this.hp) + amt))
 
 
 module.directive 'unit', ->
