@@ -20,11 +20,9 @@ module.directive 'unit', ->
         </div>
         <div class="results-box">
           <table ng-show="unit.hp > 0">
-              <tr ng-repeat="(dmg, prob) in unit.results">
-                  <td>
-                    <span ng-show="dmg != unit.hp">{{dmg}}</span>
-                    <span ng-show="dmg == unit.hp">&#9760;</span>
-                  </td><td title="{{prob}}">{{prob*100|number:0}}%</td>
+              <tr ng-repeat="(dmg, prob) in unit.results" ng-class="{lethal: dmg == unit.hp}">
+                  <td>{{dmg}}</td>
+                  <td title="{{prob}}">{{prob*100|number:0}}%</td>
               </tr>
           </table>
         </div>
@@ -47,7 +45,7 @@ window.MainController = ($scope, unitsService, resultsService) ->
     myUnits = (unit.hp for unit in unitsService.my when unit.hp > 0)
     enemyUnits = (unit.hp for unit in unitsService.enemy when unit.hp > 0)
     myIndex = enemyUnits.length
-    results = search(myUnits, enemyUnits, [1, 1, 1], [false, false, false])
+    results = simulate(myUnits, enemyUnits, [1, 1, 1], [false, false, false])
     console.log enemyUnits
     for res, i in results.data.slice(0, myIndex)
       unitsService.enemy[i].results = res

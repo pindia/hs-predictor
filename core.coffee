@@ -18,6 +18,22 @@ class GameState
         callback(i, n)
     return undefined # Stop CoffeeScript from being dumb and building a results array
 
+  random: (includeFriendly, callback) ->
+    len = if includeFriendly then this.units.length else this.myIndex
+    n = 0
+    for i in [0...len] # Calculate number of eligible units
+      if this.units[i] > 0
+        n += 1
+    targetIndex = parseInt(len*Math.random())
+    for i in [0...len]
+      if this.units[i] > 0
+        if targetIndex == 0
+          callback(i)
+          return
+        targetIndex -= 1
+    return undefined # Stop CoffeeScript from being dumb and building a results array
+
+
   damage: (i, amt) ->
     prev = this.units[i]
     this.units[i] -= amt
@@ -59,4 +75,18 @@ window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
     else
       agg.addResults(state.units, probability)
   explore(0, 1)
+  return agg
+
+window.simulate = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
+  state = new GameState(myUnits, enemyUnits)
+  agg = new ProbabilityAggregator(state.units)
+  trials = 1000
+  for i in [0...trials]
+    for damageIndex in [0...damageAmounts.length]
+      l = []
+      state.random damageTypes[damageIndex], (i) ->
+        state.damage(i, damageAmounts[damageIndex])
+    agg.addResults(state.units, 1/trials)
+    for j in [0...damageAmounts.length]
+      state.undo()
   return agg
