@@ -41,12 +41,20 @@ module.factory 'resultsService', ->
 
 window.MainController = ($scope, unitsService, resultsService) ->
   $scope.$on 'unitsChanged', ->
-    console.log 'change'
-    myUnits = (unit.hp for unit in unitsService.my when unit.hp > 0)
-    enemyUnits = (unit.hp for unit in unitsService.enemy when unit.hp > 0)
+    myUnits = (unit.hp for unit in unitsService.my)
+    enemyUnits = (unit.hp for unit in unitsService.enemy)
+    for arr in [myUnits, enemyUnits]
+      firstZero = arr.length
+      for i in [arr.length..1]
+        if arr[i] == 0
+          firstZero = i
+        else
+          break
+      arr.splice(firstZero, arr.length - firstZero)
+    console.log enemyUnits
+    console.log myUnits
     myIndex = enemyUnits.length
     results = simulate(myUnits, enemyUnits, [1, 1, 1], [false, false, false])
-    console.log enemyUnits
     for res, i in results.data.slice(0, myIndex)
       unitsService.enemy[i].results = res
     for res, i in results.data.slice(myIndex)

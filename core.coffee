@@ -24,7 +24,7 @@ class GameState
     for i in [0...len] # Calculate number of eligible units
       if this.units[i] > 0
         n += 1
-    targetIndex = parseInt(len*Math.random())
+    targetIndex = parseInt(n*Math.random())
     for i in [0...len]
       if this.units[i] > 0
         if targetIndex == 0
