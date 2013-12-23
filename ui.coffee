@@ -32,7 +32,9 @@ module.directive 'unit', ->
   '''
 
 module.factory 'unitsService', ->
-  units = {my: [new Unit(30), new Unit(0), new Unit(0)], enemy: [new Unit(30), new Unit(2), new Unit(0), new Unit(0), new Unit(0)]}
+  units = {
+    my: [new Unit(30), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0)],
+    enemy: [new Unit(30), new Unit(2), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0)]}
   return units
 
 module.factory 'resultsService', ->
