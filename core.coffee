@@ -62,7 +62,7 @@ class ProbabilityAggregator
       this.addResult(i, this.units[i] - results[i], prob)
     return undefined # Stop CoffeeScript from being dumb and building a results array
 
-window.search = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
+window.calculate = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
   state = new GameState(myUnits, enemyUnits)
   agg = new ProbabilityAggregator(state.units)
   damageLength = damageAmounts.length

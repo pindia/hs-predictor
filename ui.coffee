@@ -59,23 +59,33 @@ window.MainController = ($scope, unitsService) ->
     enemyUnits = (unit.hp for unit in unitsService.enemy)
     for arr in [myUnits, enemyUnits]
       firstZero = arr.length
-      for i in [arr.length..1]
+      for i in [arr.length-1..1]
         if arr[i] == 0
           firstZero = i
         else
           break
       arr.splice(firstZero, arr.length - firstZero)
-    console.log enemyUnits
-    console.log myUnits
     myIndex = enemyUnits.length
 
     damageAmounts = []
     damageTypes = []
-    for i in [1..$scope.enemyDamage]
+    for i in [0...$scope.allDamage]
+      damageAmounts.push 1
+      damageTypes.push true
+    for i in [0...$scope.enemyDamage]
       damageAmounts.push 1
       damageTypes.push false
 
-    results = simulate(myUnits, enemyUnits, damageAmounts, damageTypes)
+    console.log damageTypes
+
+
+    console.log myUnits
+
+    if damageAmounts.length * (myUnits.length + enemyUnits.length) > 50
+      results = simulate(myUnits, enemyUnits, damageAmounts, damageTypes)
+    else
+      results = calculate(myUnits, enemyUnits, damageAmounts, damageTypes)
+
     for res, i in results.data.slice(0, myIndex)
       unitsService.enemy[i].results = res
     for res, i in results.data.slice(myIndex)
