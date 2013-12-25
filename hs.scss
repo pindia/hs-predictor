@@ -58,13 +58,22 @@ h1 {
   }
   input {
     position: absolute;
-    left: 30px; top: 30px;
-    width: 40px; height: 40px;
+    left: 25px; top: 25px;
+    width: 50px; height: 50px;
     text-align: center;
     font-size: 18px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid #888;
+    border: none;
     outline: none;
+    padding-top: 12px;
+    background: transparent;
+    background-image: url(img/health.png);
+    background-position: center center;
+    background-size: 40px auto;
+    background-repeat: no-repeat;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black;
   }
   &.disabled {
     opacity: 0.3;
