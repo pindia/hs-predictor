@@ -8,18 +8,12 @@
     <link rel="stylesheet" href="hs.css" />
 </head>
 <body>
+    <div id="wrapper">
     <div id="main">
-        <h1>Hearthstone Missiles/Bomber Calculator</h1>
+        <h1>TC-130 Random Damage Predictor</h1>
         <div class="side" id="top">
-            <div class="label">
-                Damage<br>
-                vs. enemy
-            </div>
             <box value="enemyDamage" id="missiles"></box>
-            <div class="label">
-                Damage<br>
-                vs. all
-            </div>
+            <box value="enemyDamage" id="wrath"></box>
             <box value="allDamage" id="bomber"></box>
         </div>
 
@@ -34,6 +28,7 @@
         <div class="side" ng-controller="Side" ng-init="init('my')">
             <unit ng-repeat="unit in units" unit="unit"></unit>
         </div>
+    </div>
     </div>
 </body>
 </html>

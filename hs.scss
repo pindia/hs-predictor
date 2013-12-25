@@ -4,13 +4,20 @@
  }
 
 body {
-  width: 100%;
-  height: 100%;
-  background: url('img/background.jpg') no-repeat scroll left 30px rgb(6, 32, 54);
+  background-color: rgb(6, 32, 54);
 
 }
 
+#wrapper {
+  width: 100%;
+  height: 100%;
+  background: url('img/background1.jpg') no-repeat scroll left 30px, url('img/background2.jpg') no-repeat scroll right 30px;
+  max-width: 2260px;
+  margin: auto;
+}
+
 h1 {
+  text-align: center;
   margin-top: 0;
   font-weight: 300;
 }
@@ -23,7 +30,7 @@ h1 {
   font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
   font-size: 14px;
   line-height: 1.25em;
-  background-image: url('img/inner-background.jpg')
+  background-image: url('img/lower-background.jpg')
 
 }
 
@@ -140,6 +147,9 @@ unit:first-child .unit:after { background-image: url('img/hero.png'); }
   }
   #missiles .unit:after {
     background-image: url('img/arcane-missiles.png');
+  }
+  #wrath .unit:after {
+    background-image: url('img/avenging-wrath.png');
   }
 }
 
