@@ -115,7 +115,7 @@ window.MainController = ($scope, unitsService) ->
     console.log myUnits
 
     if damageAmounts.length * (myUnits.length + enemyUnits.length) > 50
-      trials = 1000
+      trials = 10000
       results = simulate(myUnits, enemyUnits, damageAmounts, damageTypes, trials)
       $scope.trials = trials
     else

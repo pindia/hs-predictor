@@ -4,11 +4,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
     <script src="core.js"></script>
     <script src="ui.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="hs.css" />
 </head>
 <body>
     <div id="main">
+        <h1>Hearthstone Missiles/Bomber Calculator</h1>
         <div class="side" id="top">
             <div class="label">
                 Damage<br>
@@ -22,9 +23,9 @@
             <box value="allDamage" id="bomber"></box>
         </div>
 
-        <div>
+        <div id="results-message">
             <div ng-show="trials == 0">Results were <strong>calculated exactly</strong>.</div>
-            <div ng-show="trials > 0">Results were <strong>simulated</strong> using <strong>{{trials}}</strong> trials.</div>
+            <div ng-show="trials > 0">Results were <strong>simulated</strong> using <strong>{{trials|number}}</strong> trials.</div>
         </div>
 
         <div class="side" ng-controller="Side" ng-init="init('enemy')">

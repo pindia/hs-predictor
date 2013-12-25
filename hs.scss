@@ -10,6 +10,11 @@ body {
 
 }
 
+h1 {
+  margin-top: 0;
+  font-weight: 300;
+}
+
 #main {
   width: 980px;
   padding: 20px;
@@ -90,7 +95,7 @@ body {
     content: '';
     display: block;
     position: absolute; left: 0; right: 0; top: 0; bottom: 0;
-    opacity: 0.5;
+    opacity: 0.6;
     z-index: -1;
     background-size: 100% auto;
     background-repeat: no-repeat;
@@ -136,4 +141,13 @@ unit:first-child .unit:after { background-image: url('img/hero.png'); }
   #missiles .unit:after {
     background-image: url('img/arcane-missiles.png');
   }
+}
+
+#results-message {
+  text-align: center;
+  //color: #3c763d;
+  //background-color: #dff0d8;
+  //border-color: #d6e9c6;
+  padding: 10px;
+  margin-bottom: 10px;
 }
