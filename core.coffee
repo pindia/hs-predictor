@@ -77,10 +77,9 @@ window.calculate = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
   explore(0, 1)
   return agg
 
-window.simulate = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
+window.simulate = (myUnits, enemyUnits, damageAmounts, damageTypes, trials) ->
   state = new GameState(myUnits, enemyUnits)
   agg = new ProbabilityAggregator(state.units)
-  trials = 1000
   for i in [0...trials]
     for damageIndex in [0...damageAmounts.length]
       l = []

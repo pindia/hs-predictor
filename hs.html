@@ -12,6 +12,12 @@
             <box value="enemyDamage"></box>
             <box value="allDamage"></box>
         </div>
+
+        <div>
+            <div ng-show="trials == 0">Results were <strong>calculated exactly</strong>.</div>
+            <div ng-show="trials > 0">Results were <strong>simulated</strong> using <strong>{{trials}}</strong> trials.</div>
+        </div>
+
         <div class="side" ng-controller="Side" ng-init="init('enemy')">
             <unit ng-repeat="unit in units" unit="unit"></unit>
         </div>

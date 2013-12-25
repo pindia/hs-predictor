@@ -42,11 +42,14 @@
     position: absolute;
     left: 0px; right: 0px;
     text-align: center;
-    -moz-transform: scaleX(2);
-    -webkit-transform: scaleX(2);
-    -moz-user-select: none;
-    -webkit-user-select: none;
     cursor: pointer;
+    .icon {
+      -moz-transform: scaleX(2);
+      -webkit-transform: scaleX(2);
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      display: inline-block;
+    }
   }
   .up-arrow {
     top: 8px;
@@ -57,4 +60,8 @@
   tr.lethal {
     font-weight: bold;
   }
+}
+
+#top .unit {
+  height: 100px;
 }

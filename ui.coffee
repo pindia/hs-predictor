@@ -14,8 +14,8 @@ module.directive 'box', ->
     <div class="unit" ng-class="{disabled: value==0}">
         <div class="unit-box">
           <input type="text" ng-model="value">
-          <div ng-click="modValue(1)" class="up-arrow">&#9650;</div>
-          <div ng-click="modValue(-1)" class="down-arrow">&#9660;</div>
+          <div ng-click="modValue(1)" class="up-arrow"><span class="icon">&#9650;</span></div>
+          <div ng-click="modValue(-1)" class="down-arrow"><span class="icon">&#9660;</span></div>
         </div>
     </div>
   '''
@@ -31,8 +31,8 @@ module.directive 'unit', ->
     <div class="unit" ng-class="{disabled: unit.hp==0}">
         <div class="unit-box">
           <input type="text" ng-model="unit.hp">
-          <div ng-click="unit.modHp(1)" class="up-arrow">&#9650;</div>
-          <div ng-click="unit.modHp(-1)" class="down-arrow">&#9660;</div>
+          <div ng-click="unit.modHp(1)" class="up-arrow"><span class="icon">&#9650;</span></div>
+          <div ng-click="unit.modHp(-1)" class="down-arrow"><span class="icon">&#9660;</span></div>
         </div>
         <div class="results-box">
           <table ng-show="unit.hp > 0">
@@ -54,6 +54,7 @@ module.factory 'unitsService', ->
 window.MainController = ($scope, unitsService) ->
   $scope.enemyDamage = 3
   $scope.allDamage = 0
+  $scope.trials = 0
   $scope.$on 'unitsChanged', ->
     myUnits = (unit.hp for unit in unitsService.my)
     enemyUnits = (unit.hp for unit in unitsService.enemy)
@@ -82,9 +83,12 @@ window.MainController = ($scope, unitsService) ->
     console.log myUnits
 
     if damageAmounts.length * (myUnits.length + enemyUnits.length) > 50
-      results = simulate(myUnits, enemyUnits, damageAmounts, damageTypes)
+      trials = 1000
+      results = simulate(myUnits, enemyUnits, damageAmounts, damageTypes, trials)
+      $scope.trials = trials
     else
       results = calculate(myUnits, enemyUnits, damageAmounts, damageTypes)
+      $scope.trials = 0
 
     for res, i in results.data.slice(0, myIndex)
       unitsService.enemy[i].results = res
