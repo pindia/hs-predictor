@@ -7,6 +7,9 @@
   width: 980px;
   margin: auto;
   overflow: hidden;
+  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 1.25em;
 }
 
 .side {
@@ -14,7 +17,7 @@
 }
 
 .unit {
-  width: 100px; height: 200px;
+  width: 100px; height: 218px;
   position: relative;
   float: left;
   margin: 10px;
@@ -25,8 +28,9 @@
     position: relative;
   }
   .results-box {
-    height: 100px;
+    height: 118px;
     overflow: auto;
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
   }
   input {
     position: absolute;
@@ -59,6 +63,13 @@
   }
   .down-arrow {
     bottom: 6px;
+  }
+  table {
+    width: 50px;
+    margin: auto;
+  }
+  td {
+    white-space: pre-wrap;
   }
   tr.lethal {
     font-weight: bold;

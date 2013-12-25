@@ -6,6 +6,21 @@ class Unit
   modHp: (amt) ->
     this.hp = Math.min(99, Math.max(0, parseInt(this.hp) + amt))
 
+`module.filter('numberFixedLen', function () {
+    return function (n, len) {
+        var num = parseInt(n, 10);
+        len = parseInt(len, 10);
+        if (isNaN(num) || isNaN(len)) {
+            return n;
+        }
+        num = ''+num;
+        while (num.length < len) {
+            num = ' '+num;
+        }
+        return num;
+    };
+});`
+
 module.directive 'box', ->
   restrict: 'E'
   scope:
@@ -38,7 +53,7 @@ module.directive 'unit', ->
           <table ng-show="unit.hp > 0">
               <tr ng-repeat="(dmg, prob) in unit.results" ng-class="{lethal: dmg == unit.hp}">
                   <td>{{dmg}}</td>
-                  <td title="{{prob}}">{{prob*100|number:0}}%</td>
+                  <td title="{{prob}}">{{prob*100|numberFixedLen:3}}%</td>
               </tr>
           </table>
         </div>
