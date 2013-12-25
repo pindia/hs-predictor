@@ -55,6 +55,8 @@ window.MainController = ($scope, unitsService) ->
   $scope.enemyDamage = 3
   $scope.allDamage = 0
   $scope.trials = 0
+  $scope.$watch 'enemyDamage', -> $scope.$emit('unitsChanged')
+  $scope.$watch 'allDamage', -> $scope.$emit('unitsChanged')
   $scope.$on 'unitsChanged', ->
     myUnits = (unit.hp for unit in unitsService.my)
     enemyUnits = (unit.hp for unit in unitsService.enemy)
