@@ -6,6 +6,22 @@ class Unit
   modHp: (amt) ->
     this.hp = Math.min(99, Math.max(0, parseInt(this.hp) + amt))
 
+module.directive 'box', ->
+  restrict: 'E'
+  scope:
+    value: '=value'
+  template: '''
+    <div class="unit" ng-class="{disabled: value==0}">
+        <div class="unit-box">
+          <input type="text" ng-model="value">
+          <div ng-click="modValue(1)" class="up-arrow">&#9650;</div>
+          <div ng-click="modValue(-1)" class="down-arrow">&#9660;</div>
+        </div>
+    </div>
+  '''
+  controller: ($scope) ->
+    $scope.modValue = (amt) ->
+      $scope.value = Math.min(99, Math.max(0, parseInt($scope.value) + amt))
 
 module.directive 'unit', ->
   restrict: 'E'
@@ -35,11 +51,9 @@ module.factory 'unitsService', ->
     enemy: [new Unit(30), new Unit(2), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0)]}
   return units
 
-module.factory 'resultsService', ->
-  results = {my: [], enemy: []}
-  return results
-
-window.MainController = ($scope, unitsService, resultsService) ->
+window.MainController = ($scope, unitsService) ->
+  $scope.enemyDamage = 3
+  $scope.allDamage = 0
   $scope.$on 'unitsChanged', ->
     myUnits = (unit.hp for unit in unitsService.my)
     enemyUnits = (unit.hp for unit in unitsService.enemy)
@@ -54,17 +68,22 @@ window.MainController = ($scope, unitsService, resultsService) ->
     console.log enemyUnits
     console.log myUnits
     myIndex = enemyUnits.length
-    results = simulate(myUnits, enemyUnits, [1, 1, 1], [false, false, false])
+
+    damageAmounts = []
+    damageTypes = []
+    for i in [1..$scope.enemyDamage]
+      damageAmounts.push 1
+      damageTypes.push false
+
+    results = simulate(myUnits, enemyUnits, damageAmounts, damageTypes)
     for res, i in results.data.slice(0, myIndex)
       unitsService.enemy[i].results = res
     for res, i in results.data.slice(myIndex)
       unitsService.my[i].results = res
-    $scope.$broadcast('newResults')
 
-window.Side = ($scope, unitsService, resultsService) ->
+window.Side = ($scope, unitsService) ->
   $scope.init = (which) ->
     $scope.units = unitsService[which]
-    $scope.results = resultsService[which]
   $scope.$watch('units', ->
     $scope.$emit('unitsChanged')
   , true)

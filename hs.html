@@ -7,11 +7,17 @@
     <link rel="stylesheet" href="hs.css" />
 </head>
 <body>
-    <div class="side" ng-controller="Side" ng-init="init('enemy')">
-        <unit ng-repeat="unit in units" unit="unit"></unit>
-    </div>
-    <div class="side" ng-controller="Side" ng-init="init('my')">
-        <unit ng-repeat="unit in units" unit="unit"></unit>
+    <div id="main">
+        <div class="side" id="top">
+            <box value="enemyDamage"></box>
+            <box value="allDamage"></box>
+        </div>
+        <div class="side" ng-controller="Side" ng-init="init('enemy')">
+            <unit ng-repeat="unit in units" unit="unit"></unit>
+        </div>
+        <div class="side" ng-controller="Side" ng-init="init('my')">
+            <unit ng-repeat="unit in units" unit="unit"></unit>
+        </div>
     </div>
 </body>
 </html>
