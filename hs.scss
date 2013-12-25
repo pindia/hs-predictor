@@ -34,6 +34,9 @@
     width: 40px; height: 40px;
     text-align: center;
     font-size: 18px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #888;
+    outline: none;
   }
   &.disabled {
     opacity: 0.3;
@@ -60,8 +63,50 @@
   tr.lethal {
     font-weight: bold;
   }
+  &:after {
+    content: '';
+    display: block;
+    position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+    z-index: -1;
+    opacity: 0.5;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  }
 }
 
-#top .unit {
-  height: 100px;
+.label {
+  width: 100px; height: 100px;
+  position: relative;
+  float: left;
+  margin: 10px;
+}
+
+.unit:after {
+    background-image: url('img/minion8hp.png');
+}
+
+.unit.disabled:after { background-image: none; }
+.unit[data-hp='1']:after { background-image: url('img/minion1hp.png'); }
+.unit[data-hp='2']:after { background-image: url('img/minion2hp.png'); }
+.unit[data-hp='3']:after { background-image: url('img/minion3hp.png'); }
+.unit[data-hp='4']:after { background-image: url('img/minion4hp.png'); }
+.unit[data-hp='5']:after { background-image: url('img/minion5hp.png'); }
+.unit[data-hp='6']:after { background-image: url('img/minion6hp.png'); }
+.unit[data-hp='7']:after { background-image: url('img/minion7hp.png'); }
+unit:first-child .unit:after { background-image: url('img/hero.png'); }
+
+#top {
+  .unit {
+    height: 100px;
+  }
+  .label {
+    text-align: center;
+    padding-top: 20px;
+  }
+  #bomber .unit:after {
+    background-image: url('img/mad-bomber.png');
+  }
+  #missiles .unit:after {
+    background-image: url('img/arcane-missiles.png');
+  }
 }

@@ -11,7 +11,7 @@ module.directive 'box', ->
   scope:
     value: '=value'
   template: '''
-    <div class="unit" ng-class="{disabled: value==0}">
+    <div class="unit">
         <div class="unit-box">
           <input type="text" ng-model="value">
           <div ng-click="modValue(1)" class="up-arrow"><span class="icon">&#9650;</span></div>
@@ -28,7 +28,7 @@ module.directive 'unit', ->
   scope:
     unit: '=unit'
   template: '''
-    <div class="unit" ng-class="{disabled: unit.hp==0}">
+    <div class="unit" ng-class="{disabled: unit.hp==0}" data-hp="{{unit.hp}}">
         <div class="unit-box">
           <input type="text" ng-model="unit.hp">
           <div ng-click="unit.modHp(1)" class="up-arrow"><span class="icon">&#9650;</span></div>
@@ -51,13 +51,28 @@ module.factory 'unitsService', ->
     enemy: [new Unit(30), new Unit(2), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0), new Unit(0)]}
   return units
 
+
+serializeScope = ($scope, myUnits, enemyUnits) ->
+  return $scope.enemyDamage + ',' + $scope.allDamage + ';' + (unit.hp for unit in myUnits).join(',') + ';' + (unit.hp for unit in enemyUnits).join(',')
+
+unserializeScope = ($scope, unitsService) ->
+  bits = window.location.hash.slice(1).split(';')
+  [$scope.enemyDamage, $scope.allDamage] = bits[0].split(',')
+  unitsService.my = (new Unit(parseInt(hp)) for hp in bits[1].split(','))
+  unitsService.enemy = (new Unit(parseInt(hp)) for hp in bits[2].split(','))
+  console.log unitsService.my
+
+
 window.MainController = ($scope, unitsService) ->
   $scope.enemyDamage = 3
   $scope.allDamage = 0
   $scope.trials = 0
   $scope.$watch 'enemyDamage', -> $scope.$emit('unitsChanged')
   $scope.$watch 'allDamage', -> $scope.$emit('unitsChanged')
+  if window.location.hash
+    unserializeScope($scope, unitsService)
   $scope.$on 'unitsChanged', ->
+    window.location.hash = serializeScope($scope, unitsService.my, unitsService.enemy)
     myUnits = (unit.hp for unit in unitsService.my)
     enemyUnits = (unit.hp for unit in unitsService.enemy)
     for arr in [myUnits, enemyUnits]
