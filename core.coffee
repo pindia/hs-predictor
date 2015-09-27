@@ -65,6 +65,11 @@ class ProbabilityAggregator
       this.addResult(i, this.units[i] - results[i], prob)
     return undefined # Stop CoffeeScript from being dumb and building a results array
 
+# Main calculation/simulations functions. Take list of my unit HP, list of enemy unit HP,
+# list of independently applied damage amounts (e.g. arcane missiles is [1, 1, 1]),
+# list of whether each damage packet has friendly fire (e.g. missiles = [false, false, false],
+# bomber = [true, true, true])
+
 window.calculate = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
   state = new GameState(myUnits, enemyUnits)
   agg = new ProbabilityAggregator(state.units)
@@ -73,8 +78,8 @@ window.calculate = (myUnits, enemyUnits, damageAmounts, damageTypes) ->
     if damageIndex < damageLength
       state.each damageTypes[damageIndex], (i, n) ->
         state.damage(i, damageAmounts[damageIndex])
-        explore(damageIndex + 1, probability/n)
-        state.undo()
+        explore(damageIndex + 1, probability/n) # divide probability by n because the tree has n equal probability branches
+        state.undo() # undo after this path is explored. much faster than copying
     else
       agg.addResults(state.units, probability)
   explore(0, 1)

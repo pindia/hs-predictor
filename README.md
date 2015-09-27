@@ -27,3 +27,5 @@ Combined with a super-optimized undo system, it's able to multiply and sum the o
 For simple scenarios this is actually faster than simulation. However for situations with many minions or lots of damage it slows down very quickly. For these
 complex situations TC-130 will automatically switch to the simulation method. (For you techies out there, the problem is that calculation is `O(2^n)` while
 simulation is `O(n*m)` where n is the amount of damage and m is the number of trials to simulate.)
+
+You can see the core implementation (only 100 lines) here: https://github.com/pindia/hs-predictor/blob/master/core.coffee
