@@ -12,6 +12,9 @@ and your board state on the bottom.
 Under each characters its probability distribution will appear. The number is an amount of damage it might receive, and the 
 percent is the probability of exactly that amount being received.
 
+The page URL automatically updates as you change the inputs. This means you can bookmark a particular setup or post a link to it
+to show a cool situation or Prove Someone Wrong on the Internet (tm).
+
 ## How does it work?
 
 Unlike similar tools, which run a large number of simulated trials to get results, TC-130 is able to calculate results **exactly** in most cases. It's the

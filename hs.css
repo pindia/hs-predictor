@@ -7,17 +7,14 @@
 @font-face {
   font-family: 'Belwe';
   src: url("img/belwe-medium.ttf") format("truetype"); }
-
 @font-face {
   font-family: 'Belwe';
   font-weight: 300;
   src: url("img/belwe-light.ttf") format("truetype"); }
-
 @font-face {
   font-family: 'Belwe';
   font-weight: bold;
   src: url("img/belwe-bold.ttf") format("truetype"); }
-
 body {
   background-color: black;
   padding: 0;
@@ -34,6 +31,10 @@ h1 {
   text-align: center;
   margin-top: 0;
   font-weight: 300; }
+
+.about {
+  text-align: center;
+  font-size: 12px; }
 
 #main {
   width: 980px;
