@@ -7,6 +7,7 @@ class GameState
     this.logIndex = [] # Logs of what damage has done, for fast undo when exploring other possibilities
     this.logValues = []
 
+  # Calls a callback for each living unit in the game. For exhaustive search of possibility space
   each: (includeFriendly, callback) ->
     len = if includeFriendly then this.units.length else this.myIndex
     n = 0
@@ -18,6 +19,8 @@ class GameState
         callback(i, n)
     return undefined # Stop CoffeeScript from being dumb and building a results array
 
+
+  # Calls a callback for a random living unit in the game. For simulation of possibilities
   random: (includeFriendly, callback) ->
     len = if includeFriendly then this.units.length else this.myIndex
     n = 0
@@ -45,8 +48,8 @@ class GameState
 
 class ProbabilityAggregator
   constructor: (units) ->
-    this.units = []
-    this.data = []
+    this.units = [] # Initial health of all units in the game
+    this.data = [] # List containing a map of damage values to probability for each unit
     for i in [0...units.length]
       this.units.push units[i] # Copy list
       this.data.push {}
