@@ -32,9 +32,19 @@ h1 {
   margin-top: 0;
   font-weight: 300; }
 
+h2 {
+    font-weight: 300;
+}
+
 .about {
   text-align: center;
   font-size: 12px; }
+
+.description {
+    font-weight: 300;
+    width: 600px;
+    margin: 10px auto;
+}
 
 #main {
   width: 980px;

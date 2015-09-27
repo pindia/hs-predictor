@@ -19,7 +19,7 @@
 
   module.filter('numberFixedLen', function () {
     return function (n, len) {
-        var num = parseInt(n, 10);
+        var num = Math.round(n);
         len = parseInt(len, 10);
         if (isNaN(num) || isNaN(len)) {
             return n;
