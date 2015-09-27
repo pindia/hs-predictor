@@ -26,7 +26,7 @@ module.directive 'box', ->
   scope:
     value: '=value'
   template: '''
-    <div class="unit">
+    <div class="unit" ng-class="{disabled: value==0}" data-value="{{value}}">
         <div class="unit-box">
           <input type="text" ng-model="value">
           <div ng-click="modValue(1)" class="up-arrow"><span class="icon">&#9650;</span></div>
