@@ -82,8 +82,14 @@ window.MainController = ($scope, unitsService) ->
   $scope.enemyDamage = 3
   $scope.allDamage = 0
   $scope.trials = 0
-  $scope.$watch 'enemyDamage', -> $scope.$emit('unitsChanged')
-  $scope.$watch 'allDamage', -> $scope.$emit('unitsChanged')
+  $scope.$watch 'enemyDamage', ->
+    if $scope.enemyDamage > 0
+      $scope.allDamage = 0
+    $scope.$emit('unitsChanged')
+  $scope.$watch 'allDamage', ->
+    if $scope.allDamage > 0
+      $scope.enemyDamage = 0
+    $scope.$emit('unitsChanged')
   if window.location.hash
     unserializeScope($scope, unitsService)
   $scope.$on 'unitsChanged', ->

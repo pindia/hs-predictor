@@ -119,9 +119,15 @@
     $scope.allDamage = 0;
     $scope.trials = 0;
     $scope.$watch('enemyDamage', function() {
+      if ($scope.enemyDamage > 0) {
+        $scope.allDamage = 0;
+      }
       return $scope.$emit('unitsChanged');
     });
     $scope.$watch('allDamage', function() {
+      if ($scope.allDamage > 0) {
+        $scope.enemyDamage = 0;
+      }
       return $scope.$emit('unitsChanged');
     });
     if (window.location.hash) {
